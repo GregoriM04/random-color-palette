@@ -176,7 +176,6 @@ button {
 .color-container .lock-icon,
 .color-container .color-name {
   padding: var(--spacing-2);
-  transition: var(--trans-3s);
   cursor: pointer;
 }
 
@@ -184,6 +183,7 @@ button {
 .color-container .color-name:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
+  transition: var(--trans-3s);
 }
 
 .div-color-1 {
