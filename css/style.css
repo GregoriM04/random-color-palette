@@ -154,6 +154,7 @@ button {
   height: calc(100vh - 179.4px);
   width: 100vw;
   flex-wrap: nowrap;
+  position: relative;
 }
 
 .color-container {
@@ -195,10 +196,33 @@ button {
   transition: var(--trans-3s);
 }
 
+/* Copy feedback */
+.popup {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--white-color);
+  background-color: var(--black-color);
+  padding: var(--spacing-3);
+  border-radius: 10px;
+  transition: var(--trans-5s);
+  text-align: center;
+  display: none;
+}
+
 /* Js classes */
 .isLocked {
   transform: scale(1.2);
   visibility: visible !important;
+}
+
+.show {
+  display: block;
+  transition: var(--trans-5s);
+  bottom: 2%;
+  opacity: 0;
+  animation: fade-in 1s ease forwards, fade-out 2s 1s ease forwards;
 }
 
 .div-color-1 {
@@ -219,6 +243,22 @@ button {
 
 .div-color-5 {
   background-color: #47762b;
+}
+
+/* Keyframes */
+@keyframes fade-in {
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Media queries - From Desktop to Mobile */
@@ -275,5 +315,9 @@ button {
     background-size: 300% 100%;
     padding-inline: var(--spacing-4);
     letter-spacing: 1.5px;
+  }
+
+  .popup {
+    padding: var(--spacing-1);
   }
 }

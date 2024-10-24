@@ -3,6 +3,7 @@ const saveBtn = document.getElementById("save-btn");
 const colorContainer = document.querySelectorAll(".color-container");
 const colorName = document.querySelectorAll(".color-name");
 const lockIcons = document.querySelectorAll(".lock-icon");
+const popup = document.getElementById("popup");
 
 // set new color palette after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -107,5 +108,16 @@ lockIcons.forEach((element) => {
       element.setAttribute("name", "lock-open-outline");
       element.classList.remove("isLocked");
     }
+  });
+});
+
+// copy hexcode feature
+colorName.forEach((element) => {
+  element.addEventListener("click", () => {
+    navigator.clipboard.writeText(element.innerText);
+    popup.classList.add("show");
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 2000);
   });
 });
