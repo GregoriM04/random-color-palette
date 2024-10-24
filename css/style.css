@@ -186,6 +186,21 @@ button {
   transition: var(--trans-3s);
 }
 
+.color-container .lock-icon {
+  visibility: hidden;
+}
+
+.color-container:hover .lock-icon {
+  visibility: visible;
+  transition: var(--trans-3s);
+}
+
+/* Js classes */
+.isLocked {
+  transform: scale(1.2);
+  visibility: visible !important;
+}
+
 .div-color-1 {
   background-color: #ebf5fc;
 }

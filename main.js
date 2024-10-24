@@ -2,6 +2,7 @@ const generateBtn = document.getElementById("generate-btn");
 const saveBtn = document.getElementById("save-btn");
 const colorContainer = document.querySelectorAll(".color-container");
 const colorName = document.querySelectorAll(".color-name");
+const lockIcons = document.querySelectorAll(".lock-icon");
 
 // set new color palette after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,12 +22,14 @@ generateBtn.addEventListener("click", setColors);
 // Function to set colors
 function setColors() {
   colorContainer.forEach((el) => {
-    let newColor = getColor();
-    let textColor = setContrast(hexToRgb(newColor));
-    el.children[1].style.color = textColor;
-    el.children[0].style.color = textColor;
-    el.children[1].innerText = newColor;
-    el.style.backgroundColor = newColor;
+    if (!el.children[0].classList.contains("isLocked")) {
+      let newColor = getColor();
+      let textColor = setContrast(hexToRgb(newColor));
+      el.children[1].style.color = textColor;
+      el.children[0].style.color = textColor;
+      el.children[1].innerText = newColor;
+      el.style.backgroundColor = newColor;
+    }
   });
   return 0;
 }
@@ -93,3 +96,16 @@ function setContrast(str) {
 
   return textColor;
 }
+
+// lock-color feature
+lockIcons.forEach((element) => {
+  element.addEventListener("click", () => {
+    if (element.getAttribute("name") === "lock-open-outline") {
+      element.setAttribute("name", "lock-closed-outline");
+      element.classList.add("isLocked");
+    } else {
+      element.setAttribute("name", "lock-open-outline");
+      element.classList.remove("isLocked");
+    }
+  });
+});
