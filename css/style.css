@@ -80,12 +80,22 @@ button {
 
 /* Header Style */
 .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   padding: var(--spacing-3);
   margin-top: var(--spacing-5);
+  -webkit-box-shadow: var(--shadow-2);
   box-shadow: var(--shadow-2);
 }
 
@@ -107,13 +117,23 @@ button {
   letter-spacing: 2px;
   border: 0;
   border-radius: var(--spacing-6);
+  -webkit-transition: var(--trans-3s);
+  -o-transition: var(--trans-3s);
   transition: var(--trans-3s);
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
 .btn-header-container button:active {
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
 
@@ -123,6 +143,22 @@ button {
 }
 
 .generate-btn {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#29323c),
+    color-stop(#485563),
+    color-stop(#2b5876),
+    to(#4e4376)
+  );
+  background-image: -o-linear-gradient(
+    left,
+    #29323c,
+    #485563,
+    #2b5876,
+    #4e4376
+  );
   background-image: linear-gradient(
     to right,
     #29323c,
@@ -130,10 +166,28 @@ button {
     #2b5876,
     #4e4376
   );
+  -webkit-box-shadow: 0 4px 10px 0 #2d3641bf;
   box-shadow: 0 4px 10px 0 #2d3641bf;
 }
 
 .save-btn {
+  margin-right: var(--spacing-1);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#25aae1),
+    color-stop(#4481eb),
+    color-stop(#04befe),
+    to(#3f86ed)
+  );
+  background-image: -o-linear-gradient(
+    left,
+    #25aae1,
+    #4481eb,
+    #04befe,
+    #3f86ed
+  );
   background-image: linear-gradient(
     to right,
     #25aae1,
@@ -141,27 +195,48 @@ button {
     #04befe,
     #3f86ed
   );
+  -webkit-box-shadow: 0 4px 10px 0 #4184eabf;
   box-shadow: 0 4px 10px 0 #4184eabf;
 }
 
+.generate-btn ion-icon,
+.save-btn ion-icon {
+  margin-right: var(--spacing-1);
+}
+
 .btn-header-container button:hover {
+  -webkit-box-shadow: 0 0px 0px 0 #31c4bebf;
   box-shadow: 0 0px 0px 0 #31c4bebf;
 }
 
 /* Main style */
 .main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: calc(100vh - 179.4px);
   width: 100vw;
+  -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
   position: relative;
 }
 
 .color-container {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 40%;
   flex: 1 1 40%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -184,6 +259,8 @@ button {
 .color-container .color-name:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
+  -webkit-transition: var(--trans-3s);
+  -o-transition: var(--trans-3s);
   transition: var(--trans-3s);
 }
 
@@ -193,6 +270,8 @@ button {
 
 .color-container:hover .lock-icon {
   visibility: visible;
+  -webkit-transition: var(--trans-3s);
+  -o-transition: var(--trans-3s);
   transition: var(--trans-3s);
 }
 
@@ -201,11 +280,15 @@ button {
   position: absolute;
   bottom: -10%;
   left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
   color: var(--white-color);
   background-color: var(--black-color);
   padding: var(--spacing-3);
   border-radius: 10px;
+  -webkit-transition: var(--trans-5s);
+  -o-transition: var(--trans-5s);
   transition: var(--trans-5s);
   text-align: center;
   display: none;
@@ -222,6 +305,7 @@ button {
   transition: var(--trans-5s);
   bottom: 2%;
   opacity: 0;
+  -webkit-animation: fade-in 1s ease forwards, fade-out 2s 1s ease forwards;
   animation: fade-in 1s ease forwards, fade-out 2s 1s ease forwards;
 }
 
@@ -246,9 +330,24 @@ button {
 }
 
 /* Keyframes */
+@-webkit-keyframes fade-in {
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes fade-in {
   100% {
     opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
