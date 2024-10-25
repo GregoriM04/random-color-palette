@@ -200,6 +200,7 @@ function getCanvas() {
   triggerDownload.download = "palette.png";
   document.body.appendChild(triggerDownload);
   triggerDownload.click();
+  document.body.removeChild(canvas);
   document.body.removeChild(triggerDownload);
 
   return 0;
