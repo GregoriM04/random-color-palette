@@ -19,6 +19,7 @@ document.addEventListener("keyup", (event) => {
 
 // header buttons
 generateBtn.addEventListener("click", setColors);
+saveBtn.addEventListener("click", getCanvas);
 
 // Function to set colors
 function setColors() {
@@ -121,3 +122,85 @@ colorName.forEach((element) => {
     }, 2000);
   });
 });
+
+// Function to get current colors
+function getColorsArray() {
+  let allColorsArray = [];
+  colorContainer.forEach((element) => {
+    allColorsArray.push(element.children[1].innerText);
+  });
+  return allColorsArray;
+}
+
+// Function to create a image file using a canvas element
+function getCanvas() {
+  // get current displayed colors
+  let colorToUse = getColorsArray();
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  canvas.setAttribute("width", "1280px");
+  canvas.setAttribute("height", "720px");
+  canvas.style.border = "1px solid black;";
+  const ctx = canvas.getContext("2d");
+
+  // 1st color
+  ctx.fillStyle = colorToUse[0];
+  ctx.fillRect(0, 0, 256, 650);
+  ctx.font = "bold 32px Poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 650, 1280, 720);
+  ctx.fillStyle = "black";
+  ctx.fillText(colorToUse[0], 120, 690);
+
+  // 2nd color
+  ctx.fillStyle = colorToUse[1];
+  ctx.fillRect(256, 0, 256, 650);
+  ctx.font = "bold 32px Poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "#000000";
+  ctx.fillText(colorToUse[1], 380, 690);
+
+  // 3rd color
+  ctx.fillStyle = colorToUse[2];
+  ctx.fillRect(512, 0, 256, 650);
+  ctx.font = "bold 32px Poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "#000000";
+  ctx.fillText(colorToUse[2], 630, 690);
+
+  // 4th color
+  ctx.fillStyle = colorToUse[3];
+  ctx.fillRect(768, 0, 256, 650);
+  ctx.font = "bold 32px Poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "#000000";
+  ctx.fillText(colorToUse[3], 890, 690);
+
+  // 5th color
+  ctx.fillStyle = colorToUse[4];
+  ctx.fillRect(1024, 0, 256, 650);
+  ctx.font = "bold 32px Poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "#000000";
+  ctx.fillText(colorToUse[4], 1140, 690);
+
+  // conver canvas to image file
+  let dt = canvas.toDataURL("image/png");
+  dt = dt.replace(/^data:image\/[^;]*/, "data:application/palette");
+
+  // download the file
+  let triggerDownload = document.createElement("a");
+  triggerDownload.href = dt;
+  triggerDownload.download = "palette.png";
+  document.body.appendChild(triggerDownload);
+  triggerDownload.click();
+  document.body.removeChild(triggerDownload);
+
+  return 0;
+}
