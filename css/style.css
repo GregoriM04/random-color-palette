@@ -305,8 +305,8 @@ button {
   transition: var(--trans-5s);
   bottom: 2%;
   opacity: 0;
-  -webkit-animation: fade-in 1s ease forwards, fade-out 2s 1s ease forwards;
-  animation: fade-in 1s ease forwards, fade-out 2s 1s ease forwards;
+  -webkit-animation: fade-in 1.5s ease forwards, fade-out 3s 0s ease forwards;
+  animation: fade-in 1.5s ease forwards, fade-out 3s 0s ease forwards;
 }
 
 .div-color-1 {
