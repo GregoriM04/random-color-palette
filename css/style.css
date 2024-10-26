@@ -416,6 +416,16 @@ button {
     letter-spacing: 1.5px;
   }
 
+  .main .color-container {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-inline: var(--spacing-4);
+  }
+
+  .color-container .lock-icon {
+    visibility: visible;
+  }
+
   .popup {
     padding: var(--spacing-1);
   }
