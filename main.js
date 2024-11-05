@@ -277,5 +277,10 @@ function nameThatColor(arr) {
   n_name       = n_match[1];
   n_exactmatch = n_match[2];
 
-  return n_match[1];
+  // marking approximate color with "~"
+  if(!n_exactmatch) {
+    n_name = "~" + n_match[1];
+  }
+
+  return n_name;
 }
