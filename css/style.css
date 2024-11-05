@@ -238,6 +238,7 @@ button {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  position: relative;
 }
 
 .color-container > * {
@@ -245,18 +246,18 @@ button {
 }
 
 .color-container .lock-icon,
-.color-container .color-name {
+.color-container .color-code {
   font-size: var(--ty-size-h2);
 }
 
 .color-container .lock-icon,
-.color-container .color-name {
+.color-container .color-code {
   padding: var(--spacing-2);
   cursor: pointer;
 }
 
 .color-container .lock-icon:hover,
-.color-container .color-name:hover {
+.color-container .color-code:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   -webkit-transition: var(--trans-3s);
@@ -266,6 +267,13 @@ button {
 
 .color-container .lock-icon {
   visibility: hidden;
+}
+
+.color-container .color-name {
+  position: absolute;
+  margin: 0;
+  font-size: 12px;
+  bottom: 40%;
 }
 
 .color-container:hover .lock-icon {
@@ -385,7 +393,7 @@ button {
 
 /* Medium devices (768px and down) */
 @media only screen and (max-width: 48rem) {
-  .color-container .color-name {
+  .color-container .color-code {
     font-size: var(--ty-size-h3);
   }
 }
@@ -424,6 +432,11 @@ button {
 
   .color-container .lock-icon {
     visibility: visible;
+  }
+
+  .color-container .color-name {
+    left: 7.1%;
+    bottom: 25%;
   }
 
   .popup {

@@ -1,6 +1,7 @@
 const generateBtn = document.getElementById("generate-btn");
 const saveBtn = document.getElementById("save-btn");
 const colorContainer = document.querySelectorAll(".color-container");
+const colorCode = document.querySelectorAll(".color-code");
 const colorName = document.querySelectorAll(".color-name");
 const lockIcons = document.querySelectorAll(".lock-icon");
 const popup = document.getElementById("popup");
@@ -42,6 +43,8 @@ function setColors() {
       el.children[0].style.color = textColor;
       el.children[1].innerText = newColor;
       el.style.backgroundColor = newColor;
+      el.children[2].innerText = nameThatColor(newColor);
+      el.children[2].style.color = textColor;
 
       // maintain the same color is child is locked
     } else if (el.children[0].classList.contains("isLocked")) {
@@ -87,6 +90,8 @@ function previousColors() {
       el.children[0].style.color = textColor;
       el.children[1].innerText = newColor;
       el.style.backgroundColor = newColor;
+      el.children[2].innerText = nameThatColor(newColor);
+      el.children[2].style.color = textColor;
 
       // remove color in index 0 after setting it
       lastColorsPalette.shift();
@@ -177,7 +182,7 @@ lockIcons.forEach((element) => {
 });
 
 // Copy hexcode feature
-colorName.forEach((element) => {
+colorCode.forEach((element) => {
   element.addEventListener("click", () => {
     navigator.clipboard.writeText(element.innerText);
     popup.classList.add("show");
@@ -263,4 +268,14 @@ function getCanvas() {
 // Funtion to add the generated colors to the history without reloading
 function pushStateColorToHistory() {
   return history.pushState(null, "");
+}
+
+// Function to call ntc() to set name colors
+function nameThatColor(arr) {
+  let n_match = ntc.name(arr);
+  n_rgb        = n_match[0];
+  n_name       = n_match[1];
+  n_exactmatch = n_match[2];
+
+  return n_match[1];
 }
