@@ -435,7 +435,7 @@ button {
   }
 
   .color-container .color-name {
-    left: 7.1%;
+    left: calc(0% + 38px);
     bottom: 25%;
   }
 
