@@ -31,11 +31,11 @@ There were a few issues I got after coding the main layout and functionality:
 ### Improvements
 This project has many improvement areas and cool features that can be added like:
 
-- An option to manually change a generated color by adjusting the brightness or opacity of each one.
-- An option to rearrange color in the layout by dragging and dropping.
-- A way to save colors in the URL so the palette can be saved as a link and shared with others.
-- Add tooltips to help with the interface (for example, you can generate new colors by pressing the spacebar on the keyboard).
-- Use better code implementation when using JS functions.
-- Etc.
+- [ ] An option to manually change a generated color by adjusting the brightness and/or opacity of each one.
+- [ ] An option to rearrange color in the layout by dragging and dropping.
+- [ ] A way to save colors in the URL so the palette can be saved as a link and shared with others.
+- [ ] Add tooltips to help with the interface (for example, you can generate new colors by pressing the spacebar on the keyboard).
+- [ ] Use better code implementation when using JS functions.
+- [x] Name color using a library called [Name That Color](https://chir.ag/projects/ntc/) (ntc.js) by chir.ag.
 
 Nonetheless, the way it is now helps me to answer the question I initially had: Which colors should I use now? :)
