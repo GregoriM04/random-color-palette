@@ -34,15 +34,15 @@
 
     <title>Color Generator</title>
   </head>
-  <body>
+  <body onresize="checkWinSize()">
     <header class="header">
       <h1>Color Generator</h1>
-      <div class="btn-header-container">
-        <button class="generate-btn" id="generate-btn">
+      <div class="btn-header-container" id="btn-header-container">
+        <button class="generate-btn tooltip" id="generate-btn" data-text="New palette">
           <ion-icon name="color-wand-outline"></ion-icon>
           Generate
         </button>
-        <button class="save-btn" id="save-btn">
+        <button class="save-btn tooltip" id="save-btn" data-text="Download">
           <ion-icon name="download-outline"></ion-icon>
           Save
         </button>
