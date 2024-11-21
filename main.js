@@ -175,9 +175,21 @@ lockIcons.forEach((element) => {
     if (element.getAttribute("name") === "lock-open-outline") {
       element.setAttribute("name", "lock-closed");
       element.classList.add("isLocked");
+      popup.innerText = "Locked!";
+      popup.classList.add("show");
+      setTimeout(() => {
+      popup.classList.remove("show");
+      popup.innerText = "";
+      }, 1800);
     } else {
       element.setAttribute("name", "lock-open-outline");
       element.classList.remove("isLocked");
+      popup.innerText = "Unlocked!";
+      popup.classList.add("show");
+      setTimeout(() => {
+      popup.classList.remove("show");
+      popup.innerText = "";
+      }, 1800);
     }
   });
 });
@@ -187,6 +199,7 @@ copyIcon.forEach((element) => {
   element.addEventListener("click", () => {
     let colorName = element.offsetParent.children[1].children[0].innerText;
     navigator.clipboard.writeText(colorName);
+    popup.innerText = "Copied to the clipboard!";
     popup.classList.add("show");
     element.setAttribute("name", "copy");
     element.classList.add("isLocked");
@@ -194,7 +207,8 @@ copyIcon.forEach((element) => {
       element.setAttribute("name", "copy-outline");
       element.classList.remove("isLocked");
       popup.classList.remove("show");
-    }, 2000);
+      popup.innerText = "";
+    }, 1800);
   });
 });
 
