@@ -137,7 +137,8 @@ button {
   transform: scale(0.95);
 }
 
-.btn-header-container .lock-icon {
+.btn-header-container .lock-icon,
+.btn-header-container .copy-icon {
   font-size: var(--ty-size-h3);
   margin-right: var(--spacing-1);
 }
@@ -245,19 +246,32 @@ button {
   margin: var(--spacing-2);
 }
 
-.color-container .lock-icon,
-.color-container .color-code {
-  font-size: var(--ty-size-h2);
+.action-icons {
+  display: flex;
+  flex-direction: column;
 }
 
-.color-container .lock-icon,
-.color-container .color-code {
+.action-icons .lock-icon,
+.action-icons .copy-icon {
+  font-size: var(--ty-size-h2);
   padding: var(--spacing-2);
   cursor: pointer;
 }
 
-.color-container .lock-icon:hover,
-.color-container .color-code:hover {
+.colors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-5);
+}
+
+.colors .color-code {
+  font-size: var(--ty-size-h2);
+  padding: var(--spacing-1);
+}
+
+.action-icons .lock-icon:hover,
+.action-icons .copy-icon:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   -webkit-transition: var(--trans-3s);
@@ -265,18 +279,17 @@ button {
   transition: var(--trans-3s);
 }
 
-.color-container .lock-icon {
+.color-container .lock-icon,
+.color-container .copy-icon {
   visibility: hidden;
 }
 
-.color-container .color-name {
-  position: absolute;
-  margin: 0;
+.colors .color-name {
   font-size: 12px;
-  bottom: 40%;
 }
 
-.color-container:hover .lock-icon {
+.color-container:hover .lock-icon,
+.color-container:hover .copy-icon {
   visibility: visible;
   -webkit-transition: var(--trans-3s);
   -o-transition: var(--trans-3s);
@@ -304,7 +317,7 @@ button {
 
 /* Js classes */
 .isLocked {
-  transform: scale(1.2);
+  transform: scale(1.1);
   visibility: visible !important;
 }
 
@@ -393,8 +406,11 @@ button {
 
 /* Medium devices (768px and down) */
 @media only screen and (max-width: 48rem) {
-  .color-container .color-code {
+  .colors .color-code {
     font-size: var(--ty-size-h3);
+  }
+  .colors .color-name {
+    font-size: 10px;
   }
 }
 
@@ -429,17 +445,27 @@ button {
     justify-content: space-between;
     padding-inline: var(--spacing-4);
   }
+  .colors {
+    margin-bottom: 0;
+    margin: var(--spacing-2);
+  }
 
-  .color-container .lock-icon {
+  .action-icons {
+    flex-direction: row-reverse;
+  }
+
+  .action-icons .lock-icon,
+  .action-icons .copy-icon {
     visibility: visible;
   }
 
-  .color-container .color-name {
+  .colors .color-name {
     left: calc(0% + 38px);
     bottom: 25%;
   }
 
   .popup {
-    padding: var(--spacing-1);
+    padding: var(--spacing-2);
+    font-size: 12px;
   }
 }

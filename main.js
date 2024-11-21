@@ -4,106 +4,107 @@ const colorContainer = document.querySelectorAll(".color-container");
 const colorCode = document.querySelectorAll(".color-code");
 const colorName = document.querySelectorAll(".color-name");
 const lockIcons = document.querySelectorAll(".lock-icon");
+const copyIcon = document.querySelectorAll(".copy-icon");
 const popup = document.getElementById("popup");
 
 // set new color palette after DOM is loaded
-document.addEventListener("DOMContentLoaded", setColors);
+document.addEventListener("DOMContentLoaded", () => {
+  setColors("new");
+});
 
 // set new color palette when 'spacebar' is pressed
 document.addEventListener("keyup", (event) => {
   if (event.code === "Space") {
-    setColors();
+    setColors("new");
   }
 });
 
 // DOM header buttons
-generateBtn.addEventListener("click", setColors);
+generateBtn.addEventListener("click", () => {
+  setColors("new");
+});
 saveBtn.addEventListener("click", getCanvas);
 
 // Store all palette generated so far
-let allGeneratePalette = [];
-let currentColorsArray = [];
+let totalColorPalette = [];
+let currentPalette = [];
 
-// Function to set colors in selected DOM elements
-function setColors() {
-  // reset array to only store current color
-  currentColorsArray = [];
-
-  colorContainer.forEach((el) => {
-    // get new color
-    let newColor = getColor();
-    // put new colors to all unlock children
-    if (!el.children[0].classList.contains("isLocked")) {
-      // store it on outer array
-      currentColorsArray.push(newColor);
-      // transform new hexcode color based on color brightness
-      let textColor = setContrast(hexToRgb(newColor));
-      // display all colors and set text color
-      el.children[1].style.color = textColor;
-      el.children[0].style.color = textColor;
-      el.children[1].innerText = newColor;
-      el.style.backgroundColor = newColor;
-      el.children[2].innerText = nameThatColor(newColor);
-      el.children[2].style.color = textColor;
-
-      // maintain the same color is child is locked
-    } else if (el.children[0].classList.contains("isLocked")) {
-      currentColorsArray.push(el.children[1].innerText);
+// Function to set colors on display, they could be "new" or "previous" colors
+function setColors(str) {
+  let currentColorsArray = [];
+  let newColorsPalette = [];
+  if (str === "previous") {
+    if (totalColorPalette.length > 1) {
+      removeLastPalette();
+      newColorsPalette = getLastPalette();
+      setIndividualColors();
     }
-  });
-  // saved pallete in history
-  pushStateColorToHistory();
-  return allGeneratePalette.push(currentColorsArray);
+    return 0;
+  } else if (str === "new") {
+    for (let i = 0; i < 5; i += 1) {
+      newColorsPalette.push(getColor());
+    }
+    setIndividualColors();
+  }
+
+  function setIndividualColors() {
+    colorContainer.forEach((element) => {
+      // get new color and contrast color text
+      let newColor = newColorsPalette[0];
+      let textColor = setContrast(hexToRgb(newColor));
+
+      // parameters to modify
+      let backgroundDiv = element;
+      let lockIcon = element.children[0].children[0];
+      let copyIcon = element.children[0].children[1];
+      let hexCode = element.children[1].children[0];
+      let colorName = element.children[1].children[1];
+
+      if (!lockIcon.classList.contains("isLocked")) {
+        backgroundDiv.style.backgroundColor = newColor;
+        hexCode.innerText = newColor;
+        hexCode.style.color = textColor;
+        lockIcon.style.color = textColor;
+        copyIcon.style.color = textColor;
+        colorName.innerText = nameThatColor(newColor);
+        colorName.style.color = textColor;
+
+        currentColorsArray.push(newColorsPalette[0]);
+        newColorsPalette.shift();
+      } else if (lockIcon.classList.contains("isLocked")) {
+        currentColorsArray.push(hexCode.innerText);
+        newColorsPalette.shift();
+      }
+      pushStateColorToHistory();
+    });
+
+    return 0;
+  }
+
+  // save the current displayed palette
+  (function () {
+    currentPalette = [];
+    currentColorsArray.forEach((element) => currentPalette.push(element));
+  })();
+
+  return totalColorPalette.push(currentColorsArray);
 }
 
-// Funttion to remove last palette store in allGeneratePalette
+// Function to remove last palette store in allGeneratePalette
 function removeLastPalette() {
-  let previousPalette;
-  previousPalette = allGeneratePalette.pop();
-
-  return previousPalette;
+  return totalColorPalette.pop();
 }
 
 // Function to access the last palette available in allGeneratePalette
 function getLastPalette() {
-  return allGeneratePalette[allGeneratePalette.length - 1];
+  let pallete = totalColorPalette[totalColorPalette.length - 1];
+  return pallete;
 }
 
-// Function to set previous color palette if user go back
-function previousColors() {
-  // remove last palette from display
-  removeLastPalette();
-  // remove all colors saved
-  currentColorsArray = [];
-  // get previous stringPalette
-  let lastColorsPalette = getLastPalette();
-  // save provious colors
-  lastColorsPalette.forEach((el) => currentColorsArray.push(el));
-  // saved pallete in the history
-  pushStateColorToHistory();
-
-  colorContainer.forEach((el) => {
-    let newColor = lastColorsPalette[0]; //"new" color from previous palette
-    if (!el.children[0].classList.contains("isLocked")) {
-      let textColor = setContrast(hexToRgb(newColor));
-      el.children[1].style.color = textColor;
-      el.children[0].style.color = textColor;
-      el.children[1].innerText = newColor;
-      el.style.backgroundColor = newColor;
-      el.children[2].innerText = nameThatColor(newColor);
-      el.children[2].style.color = textColor;
-
-      // remove color in index 0 after setting it
-      lastColorsPalette.shift();
-    } else if (el.children[0].classList.contains("isLocked")) {
-      // just remove color in index 0
-      lastColorsPalette.shift();
-    }
-  });
-  return 0;
-}
 // listening for users to trigger history.back() to set previous palette
-window.addEventListener("popstate", previousColors);
+window.addEventListener("popstate", () => {
+  setColors("previous");
+});
 
 // Function to generate random colors
 function getColor() {
@@ -172,7 +173,7 @@ function setContrast(str) {
 lockIcons.forEach((element) => {
   element.addEventListener("click", () => {
     if (element.getAttribute("name") === "lock-open-outline") {
-      element.setAttribute("name", "lock-closed-outline");
+      element.setAttribute("name", "lock-closed");
       element.classList.add("isLocked");
     } else {
       element.setAttribute("name", "lock-open-outline");
@@ -182,11 +183,16 @@ lockIcons.forEach((element) => {
 });
 
 // Copy hexcode feature
-colorCode.forEach((element) => {
+copyIcon.forEach((element) => {
   element.addEventListener("click", () => {
-    navigator.clipboard.writeText(element.innerText);
+    let colorName = element.offsetParent.children[1].children[0].innerText;
+    navigator.clipboard.writeText(colorName);
     popup.classList.add("show");
+    element.setAttribute("name", "copy");
+    element.classList.add("isLocked");
     setTimeout(() => {
+      element.setAttribute("name", "copy-outline");
+      element.classList.remove("isLocked");
       popup.classList.remove("show");
     }, 2000);
   });
@@ -203,7 +209,7 @@ function getCanvas() {
   const ctx = canvas.getContext("2d");
 
   // 1st color
-  ctx.fillStyle = currentColorsArray[0];
+  ctx.fillStyle = currentPalette[0];
   ctx.fillRect(0, 0, 256, 650);
   ctx.font = "normal 32px Poppins";
   ctx.textAlign = "center";
@@ -211,43 +217,43 @@ function getCanvas() {
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 650, 1280, 720);
   ctx.fillStyle = "black";
-  ctx.fillText(currentColorsArray[0], 120, 690);
+  ctx.fillText(currentPalette[0], 120, 690);
 
   // 2nd color
-  ctx.fillStyle = currentColorsArray[1];
+  ctx.fillStyle = currentPalette[1];
   ctx.fillRect(256, 0, 256, 650);
   ctx.font = "normal 32px Poppins";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = "#000000";
-  ctx.fillText(currentColorsArray[1], 380, 690);
+  ctx.fillText(currentPalette[1], 380, 690);
 
   // 3rd color
-  ctx.fillStyle = currentColorsArray[2];
+  ctx.fillStyle = currentPalette[2];
   ctx.fillRect(512, 0, 256, 650);
   ctx.font = "normal 32px Poppins";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = "#000000";
-  ctx.fillText(currentColorsArray[2], 630, 690);
+  ctx.fillText(currentPalette[2], 630, 690);
 
   // 4th color
-  ctx.fillStyle = currentColorsArray[3];
+  ctx.fillStyle = currentPalette[3];
   ctx.fillRect(768, 0, 256, 650);
   ctx.font = "normal 32px Poppins";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = "#000000";
-  ctx.fillText(currentColorsArray[3], 890, 690);
+  ctx.fillText(currentPalette[3], 890, 690);
 
   // 5th color
-  ctx.fillStyle = currentColorsArray[4];
+  ctx.fillStyle = currentPalette[4];
   ctx.fillRect(1024, 0, 256, 650);
   ctx.font = "normal 32px Poppins";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = "#000000";
-  ctx.fillText(currentColorsArray[4], 1140, 690);
+  ctx.fillText(currentPalette[4], 1140, 690);
 
   // conver canvas to image file
   let dt = canvas.toDataURL("image/png");
@@ -273,12 +279,12 @@ function pushStateColorToHistory() {
 // Function to call ntc() to set name colors
 function nameThatColor(arr) {
   let n_match = ntc.name(arr);
-  n_rgb        = n_match[0];
-  n_name       = n_match[1];
+  n_rgb = n_match[0];
+  n_name = n_match[1];
   n_exactmatch = n_match[2];
 
-  // marking approximate color with "~"
-  if(!n_exactmatch) {
+  // marking approximate colors with "~"
+  if (!n_exactmatch) {
     n_name = "~" + n_match[1];
   }
 
