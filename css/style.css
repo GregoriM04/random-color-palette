@@ -240,10 +240,20 @@ button {
   -ms-flex-direction: column;
   flex-direction: column;
   position: relative;
+  background-color: darkgrey;
 }
 
-.color-container > * {
+.color-container .div-colors > * {
   margin: var(--spacing-2);
+}
+
+.div-colors {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .action-icons {
@@ -256,6 +266,21 @@ button {
   font-size: var(--ty-size-h2);
   padding: var(--spacing-2);
   cursor: pointer;
+}
+
+.action-icons .swap-icon {
+  font-size: var(--ty-size-h2);
+  padding: var(--spacing-2);
+  cursor: grab;
+}
+
+.action-icons .swap-icon:active {
+  cursor: grabbing;
+}
+
+.over {
+  border-style: dashed;
+  opacity: 0.5;
 }
 
 .colors {
@@ -271,7 +296,8 @@ button {
 }
 
 .action-icons .lock-icon:hover,
-.action-icons .copy-icon:hover {
+.action-icons .copy-icon:hover,
+.action-icons .swap-icon:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   -webkit-transition: var(--trans-3s);
@@ -279,8 +305,9 @@ button {
   transition: var(--trans-3s);
 }
 
-.color-container .lock-icon,
-.color-container .copy-icon {
+.action-icons .lock-icon,
+.action-icons .copy-icon,
+.action-icons .swap-icon {
   visibility: hidden;
 }
 
@@ -289,7 +316,8 @@ button {
 }
 
 .color-container:hover .lock-icon,
-.color-container:hover .copy-icon {
+.color-container:hover .copy-icon,
+.color-container:hover .swap-icon {
   visibility: visible;
   -webkit-transition: var(--trans-3s);
   -o-transition: var(--trans-3s);
@@ -369,7 +397,7 @@ button {
   text-align: center;
   display: none;
   opacity: 0;
-  animation: fade-in 1s ease 1s 1 normal forwards;
+  animation: fade-in 0.5s ease 1s 1 normal forwards;
 }
 
 .tooltip:hover::before {
@@ -383,18 +411,17 @@ button {
   z-index: 100;
   bottom: -30%;
   left: 45%;
-  border:10px solid #323232ba;
+  border: 10px solid #323232ba;
   border-color: transparent transparent #323232ba transparent;
   display: none;
   opacity: 0;
-  animation: fade-in 1s ease 1s 1 normal forwards;
+  animation: fade-in 0.5s ease 1s 1 normal forwards;
 }
 
-.tooltip:hover::before, 
+.tooltip:hover::before,
 .tooltip:hover::after {
   display: block;
 }
-
 
 /* Keyframes */
 @-webkit-keyframes fade-in {
@@ -409,7 +436,7 @@ button {
   }
 }
 
-@-webkit-keyframes fade-out {
+/* @-webkit-keyframes fade-out {
   0% {
     opacity: 1;
   }
@@ -425,7 +452,7 @@ button {
   100% {
     opacity: 0;
   }
-}
+} */
 
 /* Media queries - From Desktop to Mobile */
 /* Largest devices (1600px and down) */
@@ -459,7 +486,7 @@ button {
     font-size: 10px;
   }
 
-  .tooltip::before{
+  .tooltip::before {
     width: 120px;
     font-size: 13px;
   }
@@ -494,8 +521,14 @@ button {
   .main .color-container {
     flex-direction: row-reverse;
     justify-content: space-between;
-    padding-inline: var(--spacing-4);
+    /* padding-inline: var(--spacing-4); */
   }
+
+  .div-colors {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
   .colors {
     margin-bottom: 0;
     margin: var(--spacing-2);
@@ -506,7 +539,8 @@ button {
   }
 
   .action-icons .lock-icon,
-  .action-icons .copy-icon {
+  .action-icons .copy-icon,
+  .action-icons .swap-icon {
     visibility: visible;
   }
 

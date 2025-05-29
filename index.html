@@ -34,11 +34,15 @@
 
     <title>Color Generator</title>
   </head>
-  <body onresize="checkWinSize()">
+  <body>
     <header class="header">
       <h1>Color Generator</h1>
       <div class="btn-header-container" id="btn-header-container">
-        <button class="generate-btn tooltip" id="generate-btn" data-text="New palette">
+        <button
+          class="generate-btn tooltip"
+          id="generate-btn"
+          data-text="New palette"
+        >
           <ion-icon name="color-wand-outline"></ion-icon>
           Generate
         </button>
@@ -49,58 +53,124 @@
       </div>
     </header>
     <main class="main">
-      <div class="color-container div-color-1">
-        <div class="action-icons">
-          <ion-icon name="lock-open-outline" class="lock-icon"></ion-icon>
-          <ion-icon name="copy-outline" class="copy-icon"></ion-icon>
-        </div>
-        <div class="colors">
-          <div class="color-code">#EBF5FC</div>
-          <p class="color-name"></p>
-        </div>
-      </div>
-      <div class="color-container div-color-2">
-        <div class="action-icons">
-          <ion-icon name="lock-open-outline" class="lock-icon"></ion-icon>
-          <ion-icon name="copy-outline" class="copy-icon"></ion-icon>
-        </div>
-        <div class="colors">
-          <div class="color-code">#765D2B</div>
-          <p class="color-name"></p>
-        </div>
-      </div>
-      <div class="color-container div-color-3">
-        <div class="action-icons">
-          <ion-icon name="lock-open-outline" class="lock-icon"></ion-icon>
-          <ion-icon name="copy-outline" class="copy-icon"></ion-icon>
-        </div>
-        <div class="colors">
-          <div class="color-code">#762B58</div>
-          <p class="color-name"></p>
+      <div class="color-container">
+        <div class="div-colors div-color-1">
+          <div class="action-icons">
+            <ion-icon
+              name="lock-open-outline"
+              class="lock-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="copy-outline"
+              class="copy-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="swap-horizontal"
+              class="swap-icon"
+              draggable="true"
+            ></ion-icon>
+          </div>
+          <div class="colors">
+            <div class="color-code">#EBF5FC</div>
+            <p class="color-name"></p>
+          </div>
         </div>
       </div>
-      <div class="color-container div-color-4">
-        <div class="action-icons">
-          <ion-icon name="lock-open-outline" class="lock-icon"></ion-icon>
-          <ion-icon name="copy-outline" class="copy-icon"></ion-icon>
-        </div>
-        <div class="colors">
-          <div class="color-code">#2B7670</div>
-          <p class="color-name"></p>
+      <div class="color-container">
+        <div class="div-colors div-color-2">
+          <div class="action-icons">
+            <ion-icon
+              name="lock-open-outline"
+              class="lock-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="copy-outline"
+              class="copy-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="swap-horizontal"
+              class="swap-icon"
+              draggable="true"
+            ></ion-icon>
+          </div>
+          <div class="colors">
+            <div class="color-code">#765D2B</div>
+            <p class="color-name"></p>
+          </div>
         </div>
       </div>
-      <div class="color-container div-color-5">
-        <div class="action-icons">
-          <ion-icon name="lock-open-outline" class="lock-icon"></ion-icon>
-          <ion-icon name="copy-outline" class="copy-icon"></ion-icon>
+      <div class="color-container">
+        <div class="div-colors div-color-3">
+          <div class="action-icons">
+            <ion-icon
+              name="lock-open-outline"
+              class="lock-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="copy-outline"
+              class="copy-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="swap-horizontal"
+              class="swap-icon"
+              draggable="true"
+            ></ion-icon>
+          </div>
+          <div class="colors">
+            <div class="color-code">#762B58</div>
+            <p class="color-name"></p>
+          </div>
         </div>
-        <div class="colors">
-          <div class="color-code">#47762B</div>
-          <p class="color-name"></p>
+      </div>
+      <div class="color-container">
+        <div class="div-colors div-color-4">
+          <div class="action-icons">
+            <ion-icon
+              name="lock-open-outline"
+              class="lock-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="copy-outline"
+              class="copy-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="swap-horizontal"
+              class="swap-icon"
+              draggable="true"
+            ></ion-icon>
+          </div>
+          <div class="colors">
+            <div class="color-code">#2B7670</div>
+            <p class="color-name"></p>
+          </div>
+        </div>
+      </div>
+      <div class="color-container">
+        <div class="div-colors div-color-5">
+          <div class="action-icons">
+            <ion-icon
+              name="lock-open-outline"
+              class="lock-icon event-btn"
+              id="lock"
+            ></ion-icon>
+            <ion-icon
+              name="copy-outline"
+              class="copy-icon event-btn"
+            ></ion-icon>
+            <ion-icon
+              name="swap-horizontal"
+              class="swap-icon"
+              draggable="true"
+            ></ion-icon>
+          </div>
+          <div class="colors">
+            <div class="color-code">#47762B</div>
+            <p class="color-name"></p>
+          </div>
         </div>
       </div>
 
-      <!-- Copy feedback -->
+      <!-- Copy/Lock feedback -->
       <div class="popup" id="popup"></div>
     </main>
 

@@ -1,19 +1,24 @@
+const main = document.querySelector(".main");
 const generateBtn = document.getElementById("generate-btn");
 const saveBtn = document.getElementById("save-btn");
 const colorContainer = document.querySelectorAll(".color-container");
 const colorCode = document.querySelectorAll(".color-code");
 const colorName = document.querySelectorAll(".color-name");
+const actionIconsContainer = document.querySelectorAll(".action-icons");
 const lockIcons = document.querySelectorAll(".lock-icon");
 const copyIcon = document.querySelectorAll(".copy-icon");
+const swapIcons = document.querySelectorAll(".swap-icon");
 const popup = document.getElementById("popup");
 
 // set new color palette after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   setColors("new");
+  widthChecker();
 });
 
 // set new color palette when 'spacebar' is pressed
 document.addEventListener("keyup", (event) => {
+  event.preventDefault();
   if (event.code === "Space") {
     setColors("new");
   }
@@ -54,11 +59,12 @@ function setColors(str) {
       let textColor = setContrast(hexToRgb(newColor));
 
       // parameters to modify
-      let backgroundDiv = element;
-      let lockIcon = element.children[0].children[0];
-      let copyIcon = element.children[0].children[1];
-      let hexCode = element.children[1].children[0];
-      let colorName = element.children[1].children[1];
+      let backgroundDiv = element.children[0];
+      let lockIcon = element.children[0].children[0].children[0];
+      let copyIcon = element.children[0].children[0].children[1];
+      let swapIcon = element.children[0].children[0].children[2];
+      let hexCode = element.children[0].children[1].children[0];
+      let colorName = element.children[0].children[1].children[1];
 
       if (!lockIcon.classList.contains("isLocked")) {
         backgroundDiv.style.backgroundColor = newColor;
@@ -66,6 +72,7 @@ function setColors(str) {
         hexCode.style.color = textColor;
         lockIcon.style.color = textColor;
         copyIcon.style.color = textColor;
+        swapIcon.style.color = textColor;
         colorName.innerText = nameThatColor(newColor);
         colorName.style.color = textColor;
 
@@ -169,47 +176,46 @@ function setContrast(str) {
   return textColor;
 }
 
-// lock-color feature
-lockIcons.forEach((element) => {
-  element.addEventListener("click", () => {
-    if (element.getAttribute("name") === "lock-open-outline") {
-      element.setAttribute("name", "lock-closed");
-      element.classList.add("isLocked");
+// storing the event listener at the top parent to not lose it when mutating child elements
+main.addEventListener("click", (e) => {
+  let focus = e.target;
+  // lock-color feature
+  if (focus.classList.contains("lock-icon")) {
+    if (focus.getAttribute("name") === "lock-open-outline") {
+      focus.setAttribute("name", "lock-closed");
+      focus.classList.add("isLocked");
       popup.innerText = "Locked!";
       popup.classList.add("show");
       setTimeout(() => {
-      popup.classList.remove("show");
-      popup.innerText = "";
+        popup.classList.remove("show");
+        popup.innerText = "";
       }, 1800);
     } else {
-      element.setAttribute("name", "lock-open-outline");
-      element.classList.remove("isLocked");
+      focus.setAttribute("name", "lock-open-outline");
+      focus.classList.remove("isLocked");
       popup.innerText = "Unlocked!";
       popup.classList.add("show");
       setTimeout(() => {
-      popup.classList.remove("show");
-      popup.innerText = "";
+        popup.classList.remove("show");
+        popup.innerText = "";
       }, 1800);
     }
-  });
-});
-
-// Copy hexcode feature
-copyIcon.forEach((element) => {
-  element.addEventListener("click", () => {
-    let colorName = element.offsetParent.children[1].children[0].innerText;
+    // Copy hexcode feature
+  } else if (focus.classList.contains("copy-icon")) {
+    let colorName =
+      focus.offsetParent.children[0].children[1].children[0].innerText;
     navigator.clipboard.writeText(colorName);
     popup.innerText = "Copied to the clipboard!";
     popup.classList.add("show");
-    element.setAttribute("name", "copy");
-    element.classList.add("isLocked");
+    focus.setAttribute("name", "copy");
+    focus.classList.add("isLocked");
     setTimeout(() => {
-      element.setAttribute("name", "copy-outline");
-      element.classList.remove("isLocked");
+      focus.setAttribute("name", "copy-outline");
+      focus.classList.remove("isLocked");
       popup.classList.remove("show");
       popup.innerText = "";
     }, 1800);
-  });
+  }
 });
 
 // Function to create a image file using a canvas element
@@ -303,4 +309,52 @@ function nameThatColor(arr) {
   }
 
   return n_name;
+}
+
+// Function to check and change the swap icons based on screen width (mobile)
+function widthChecker() {
+  if (main.clientWidth < 577) {
+    swapIcons.forEach((element) => {
+      element.setAttribute("name", "swap-vertical");
+    });
+  }
+}
+
+// Drag and drop feature
+swapIcons.forEach((element) => {
+  let colorBlockToMove = element.offsetParent;
+
+  colorBlockToMove.addEventListener("dragstart", handleDragstart);
+  colorBlockToMove.addEventListener("dragover", handleDragover);
+  colorBlockToMove.addEventListener("dragleave", handleDragleave);
+  colorBlockToMove.addEventListener("drop", handleDrop);
+});
+
+let draggedElement;
+
+function handleDragstart(event) {
+  draggedElement = this;
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/html", this.innerHTML);
+}
+
+function handleDragover(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
+  this.classList.add("over");
+}
+
+function handleDragleave() {
+  this.classList.remove("over");
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  draggedElement.innerHTML = this.innerHTML;
+  this.innerHTML = event.dataTransfer.getData("text/html");
+  this.classList.remove("over");
+}
+
+function handleDragend() {
+  draggedElement = null;
 }
