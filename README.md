@@ -28,12 +28,14 @@ There were a few issues I got after coding the main layout and functionality:
 
 4. _Lock colors while saving palettes?:_ The last issue created the need to save all palettes somewhere besides the browser's history. I used an empty array to save them all during the current session. That way, I can always maintain any locked color while also being able to access previous ones if needed.
 
+5. _Swap color within the current palette:_ This was very funny (and took longer that I wanted to admit to solve) because I've found a way to drag and drops the elements in the DOM, but since the elements were mutating in it, the event listeners in the action buttons -lock and copy-, were gone after the drop. So, the solution was pretty "simple": store the listeners in the top parent container (a.k.a offsetParent).
+
 ### Improvements
 This project has many improvement areas and cool features that can be added like:
 
 - [ ] An option to manually change a generated color by adjusting the brightness and/or opacity of each one.
 - [ ] An option to rearrange color in the layout by dragging and dropping.
-- [ ] A way to save colors in the URL so the palette can be saved as a link and shared with others.
+- [x] A way to save colors in the URL so the palette can be saved as a link and shared with others.
 - [x] Add tooltips to help with the interface.
 - [x] Use better code implementation when using JS functions.
 - [x] Name color using a library called [Name That Color](https://chir.ag/projects/ntc/) (ntc.js) by chir.ag.
@@ -44,3 +46,4 @@ This section is worked on in the **updates** branch. It uses all the information
 1. General Refactoring: I basically reworked the code presented to be a bit more efficient by combining a few functions and rethinking a few features (like copy-feature).
 2. Tooltips: These were added to help users with the two main action buttons, Generate and Save, so they're better used.
 3. Popup feature: I also enhanced the popup option to 'notify' when copying a code and locking it. 
+4. Swap color: Using the drag and drop feature.
